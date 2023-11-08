@@ -260,7 +260,7 @@ body{
   border-radius: 10px;
   cursor: pointer;
 }
-#addbook,#addborrower,#issuebook{
+#addbook,#addborrower,#updateborrower,#issuebook{
   position: absolute;
   width: 100%;
   height: 120%;

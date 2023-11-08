@@ -44,7 +44,7 @@
                      
                       </div>
                 </div>
-              <table class="table">
+              <!--<table class="table">
                 <tbody>
                   <tr>
                     <td>Id:</td>
@@ -63,7 +63,7 @@
                         <td id="adminphone"></td>
                     </tr>
                 </tbody>
-            </table>
+            </table-->
              </div>
         </div>
         <div id="book">
@@ -115,7 +115,43 @@
           </div>
         </div>
    </div>
-
+   <div id="updateborrower" style="display: none;">
+    <div class="form">
+      <div class="header" style="padding: 10px;">
+        <p>Update Borrower</p>
+        <div>
+          <button class="button" onclick="updateborrower()" style="height: 100%;">
+            Update
+          </button>
+          <button class="button" onclick="closeupdate()" style="height: 100%;">
+            Cancel
+          </button>
+        </div>
+      </div>
+      <table class="datatable" style="border: none;">
+        <tr>
+          <td>Borrower Name:</td>
+          <td><input type="text" id="updateborrowername" placeholder="Borrower Name"></td>
+        </tr>
+        <tr>
+          <td>Borrower Id:</td>
+          <td><input type="text" id="updateborrowerid" placeholder="Borrower ID" disabled></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><input type="text" id="updateborroweremail" placeholder="Email"></td>
+        </tr>
+        <tr>
+          <td>Phone:</td>
+          <td><input type="text" id="updateborrowerphone" placeholder="Phone"></td>
+        </tr>
+        <tr>
+          <td>Gender:</td>
+          <td><input type="text" id="updateborrowergender" placeholder="Gender"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
    <div id="addbook">
       <div class="form">
         <div class="header" style="padding: 10px;">

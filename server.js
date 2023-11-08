@@ -160,6 +160,8 @@ app.post('/addborrower', (req, res) => {
   });
 });
 
+
+
 // Route for removing a borrower
 app.post('/removeborrower', (req, res) => {
   let sql = "DELETE FROM borrower WHERE borrowerid=?";

@@ -1,9 +1,3 @@
-// Function to add specified number of days to a date
-Date.prototype.addDays = function (days) {
-  let date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
-}
 // Function to load data from URL parameters and populate form fields
 function  loaddata()
 {
@@ -105,57 +99,74 @@ class admin{
   }
 
   // Function to display borrower-related content
-  gotoborw=function()
-  {
-    const heading=["Id","Name","Email","Phone","Gender","Remove"];
-    let borrowertable=document.getElementById('borrowertable')
-    borrowertable.innerHTML=""
-    let tr=document.createElement("tr");
+  gotoborw = function() {
+    const heading = ["Id", "Name", "Email", "Phone", "Gender", "Update", "Remove"];
+    let borrowertable = document.getElementById('borrowertable');
+    borrowertable.innerHTML = '';
+    let tr = document.createElement('tr');
     for (let index = 0; index < heading.length; index++) {
-      let th=document.createElement("th");
-      th.setAttribute("align","left");
-      th.setAttribute("valign","middle");
-      th.innerHTML=heading[index];
+      let th = document.createElement('th');
+      th.setAttribute('align', 'left');
+      th.setAttribute('valign', 'middle');
+      th.innerHTML = heading[index];
       tr.appendChild(th);
     }
     borrowertable.appendChild(tr);
-    this.dash.style.display="none";
-    this.borw.style.display="flex";
-    this.issue.style.display="none";
-    this.book.style.display="none";
-    this.dashmenu.classList.remove("active");
-    this.borwmenu.classList.add("active");
-    this.issuemenu.classList.remove("active");
-    this.bookmenu.classList.remove("active");
+    this.dash.style.display = 'none';
+    this.borw.style.display = 'flex';
+    this.issue.style.display = 'none';
+    this.book.style.display = 'none';
+    this.dashmenu.classList.remove('active');
+    this.borwmenu.classList.add('active');
+    this.issuemenu.classList.remove('active');
+    this.bookmenu.classList.remove('active');
     {
-      let params={
-        headers:{
-            'Content-Type':'application/json'
+      let params = {
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-        }),
-        method:"POST"
-      }
-      fetch('http://localhost:4000/borrower',params)
-      .then(response=>response.json())
-      .then(res => { 
-        let data=res.data;
-        for (let index = 0; index < data.length; index++) {
-          let tr=document.createElement("tr");
-          for (let i in data[index]) {  
-            let td=document.createElement("td");
-            td.innerHTML=data[index][i];
-            tr.appendChild(td);
+        body: JSON.stringify({}),
+        method: 'POST'
+      };
+      fetch('http://localhost:4000/borrower', params)
+        .then(response => response.json())
+        .then(res => {
+          let data = res.data;
+          for (let index = 0; index < data.length; index++) {
+            let tr = document.createElement('tr');
+            for (let i in data[index]) {
+              let td = document.createElement('td');
+              td.innerHTML = data[index][i];
+              tr.appendChild(td);
+            }
+  
+            // Add "Update" button
+            let updateButton = document.createElement('button');
+            updateButton.type = 'button';
+            updateButton.textContent = 'Update';
+            updateButton.onclick = function() {
+              openUpdateForm(data[index]); // Pass borrower data to open the update form
+            };
+            let tdUpdate = document.createElement('td');
+            tdUpdate.appendChild(updateButton);
+            tr.appendChild(tdUpdate);
+  
+            // Add "Remove" button and its functionality
+            let removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+              removeborrower(data[index].Id); // Pass borrower ID to remove function
+            };
+            let tdRemove = document.createElement('td');
+            tdRemove.appendChild(removeButton);
+            tr.appendChild(tdRemove);
+  
+            borrowertable.appendChild(tr);
           }
-          let td=document.createElement("td");
-          td.innerHTML="<button type=\"button\"\">Remove</button>";
-          td.onclick=removeborrower;
-          tr.appendChild(td);
-          borrowertable.appendChild(tr);
-        }
-      })
+        });
     }
-  }
+  };
   
   // Function to display issue books to borrowers
   gotoissue=function()
@@ -448,6 +459,17 @@ function saveborrower()
       }
     })
 
+}
+function openUpdateForm(borrowerData) {
+  // Populate the update form with current details
+  document.getElementById('updateborrowername').value = borrowerData.Name;
+  document.getElementById('updateborrowerid').value = borrowerData.Id;
+  document.getElementById('updateborroweremail').value = borrowerData.Email;
+  document.getElementById('updateborrowerphone').value = borrowerData.Phone;
+  document.getElementById('updateborrowergender').value = borrowerData.Gender;
+
+  // Show the update form
+  document.getElementById('updateborrower').style.display = 'block';
 }
 
 // Function to remove a borrower entry
